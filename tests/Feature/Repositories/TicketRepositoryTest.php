@@ -28,7 +28,7 @@ class TicketRepositoryTest extends TestCase
    */
   public function ValidateFindOneTicketRepositoryUserNotExit()
   {
-    $id = 200;
+    $id = 0;
     $ticket = new TicketRepository;
     $return = $ticket->find($id);
     $this->assertNull($return);
@@ -44,5 +44,21 @@ class TicketRepositoryTest extends TestCase
     $return = $ticket->find($id);
     $validate = Ticket::find($id);
     $this->assertEquals($return, $validate);
+  }
+
+  /**
+   *@test
+   */
+
+  public function ValalidateInsertTicketInDatabase()
+  {
+    $data = array(
+      'title' => fake()->sentence(),
+      'content' => fake()->text(),
+      'user_id' => rand(1, 10)
+    );
+    $ticket = new TicketRepository;
+    $ticket->create($data);
+    $this->assertDatabaseHas('tickets', ['user_id' => $data['user_id']]);
   }
 }

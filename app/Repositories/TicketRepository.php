@@ -28,8 +28,22 @@ class TicketRepository implements TicketRepoInterface
   {
     return Ticket::find($id);
   }
+
+  /**
+   * Create ticket in database
+   *
+   * @param array $atributts
+   * @return array
+   */
   public function create(array $atributts)
   {
+    $ticket = new Ticket;
+    $ticket->title = $atributts['title'];
+    $ticket->content = $atributts['content'];
+    $ticket->user_id = $atributts['user_id'];
+    $ticket->save();
+
+    return $ticket;
   }
   public function update(int $id, array $atributts)
   {
