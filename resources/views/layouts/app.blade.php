@@ -7,10 +7,26 @@
     <title>@yield('title')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url('/css/app.style.css') }}">
+    <!-- Boxicons CSS -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
-    <main class="container">
+    <header class="row justify-content-center">
+        <div id="header" class="col-xl-7 d-flex justify-content-between">
+            <a class="logo">
+                <i class='bx bxs-extension'></i>
+                <span>TicketPlus</span>
+            </a>
+            <div class="profile">
+                <span>Alo</span>
+
+            </div>
+        </div>
+    </header>
+
+    <main>
         @yield('content')
     </main>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"

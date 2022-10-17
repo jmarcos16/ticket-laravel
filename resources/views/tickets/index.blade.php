@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row justify-content-center">
-        <div class="col-xl-10 mt-5 mb-3">
+        <div class="col-xl-7 mt-5 mb-3">
             <div class="d-flex justify-content-between">
                 <h3>All Tikckets</h3>
                 <a class="btn btn-primary " href="{{ route('ticket.create') }}">New Ticket</a>

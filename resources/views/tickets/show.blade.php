@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row justify-content-center">
-        <div class="col-xl-10 mt-5 mb-3">
+        <div class="col-xl-7 mt-5 mb-3">
             <span>#{{ $ticket->id }}</span>
             <div class="card p-2 d-flex justify-content-center w-100">
                 <h4>{{ $ticket->title }}</h4>

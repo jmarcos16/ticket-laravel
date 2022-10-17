@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row justify-content-center">
-        <div class="col-xl-10 mt-5 mb-3">
+        <div class="col-xl-7 mt-5 mb-3">
             <h3>Editando Ticket #{{ $ticket->id }}</h3>
             <form action="{{ route('ticket.update', $ticket->id) }}" method="POST">
                 @method('PUT')
