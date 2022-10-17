@@ -62,8 +62,34 @@ class TicketControllerTest extends TestCase
    * @test
    */
 
-  public function ValidateIfValueIdIsNotValidValid()
+  public function CheckingTheReturnFromShow()
   {
-    $response = $this->get(route('ticket.show'));
+    $response = $this->get(route('ticket.show', 1));
+    $response->assertViewIs('tickets.show');
+    $response->assertViewHasAll(['ticket']);
+  }
+
+  /**
+   * @test
+   */
+  public function CheckingTheReturnFromEdit()
+  {
+    $response = $this->get(route('ticket.edit', 1));
+    $response->assertViewIs('tickets.edit');
+    $response->assertViewHasAll(['ticket']);
+  }
+
+  /**
+   * @test
+   */
+  public function CheckingTheReturnFromUpdate()
+  {
+    $data = array(
+      'title' => 'Title of ticket',
+      'content' => 'Content of Ticket',
+    );
+
+    $response = $this->put(route('ticket.update', 1), $data);
+    $response->assertRedirect(route('ticket.all'));
   }
 }
