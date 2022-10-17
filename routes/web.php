@@ -18,3 +18,5 @@ Route::get('/tickets', [TicketController::class, 'index'])->name('ticket.all');
 Route::get('/ticket/{id}', [TicketController::class, 'show'])->name('ticket.show');
 Route::get('/create', [TicketController::class, 'create'])->name('ticket.create');
 Route::post('/store', [TicketController::class, 'store'])->name('ticket.store');
+Route::get('/edit/{id}', [TicketController::class, 'edit'])->name('ticket.edit');
+Route::put('/update/{id}', [TicketController::class, 'update'])->name('ticket.update');

@@ -47,6 +47,12 @@ class TicketRepository implements TicketRepoInterface
   }
   public function update(int $id, array $atributts)
   {
+    $ticket = Ticket::find($id)->update([
+      'title' => $atributts['title'],
+      'content' => $atributts['content']
+    ]);
+
+    return $ticket;
   }
   public function delete(int $id)
   {

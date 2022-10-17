@@ -48,7 +48,18 @@ class TicketController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    $validated = $request->validate([
+      'title' => 'required',
+      'content' => 'required'
+    ]);
+
+    $validated = array_merge($validated, ['user_id' => rand(1, 10)]); //Gambiarra
+
+    $ticket = $this->ticket->create($validated);
+
+    return redirect()
+      ->route('ticket.all')
+      ->with('success', 'Ticket created successful.');
   }
 
   /**
@@ -74,7 +85,11 @@ class TicketController extends Controller
    */
   public function edit($id)
   {
-    //
+    $ticket = $this->ticket->find($id);
+
+    return view('tickets.edit', array(
+      'ticket' => $ticket
+    ));
   }
 
   /**
@@ -86,7 +101,15 @@ class TicketController extends Controller
    */
   public function update(Request $request, $id)
   {
-    //
+    $validated = $request->validate([
+      'title' => 'required',
+      'content' => 'required'
+    ]);
+
+    $ticket = $this->ticket->update($id, $validated);
+
+    return redirect()
+      ->route('ticket.all');
   }
 
   /**

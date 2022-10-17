@@ -61,4 +61,54 @@ class TicketRepositoryTest extends TestCase
     $ticket->create($data);
     $this->assertDatabaseHas('tickets', ['user_id' => $data['user_id']]);
   }
+
+
+  /**
+   * @test
+   */
+  public function CheckIfTicketNotExitIn()
+  {
+    $ticket = new TicketRepository;
+    $check = $ticket->find(54448545641);
+    $this->assertNull($check);
+  }
+
+  /**
+   * @test
+   */
+  public function ValidatesIfTicketDoesDotExist()
+  {
+    $atributts = [
+      'id' => 1783183,
+      'title' => fake()->title(),
+      'content' => fake()->sentence()
+    ];
+    $ticket = new TicketRepository;
+    $check = $ticket->find($atributts['id']);
+    $this->assertNull($check);
+  }
+
+  /**
+   * @test
+   */
+  public function ValidateThatTheDatabaseHasBeenUpdated()
+  {
+    $data = array(
+      'id' => 1000,
+      'title' => fake()->sentence(),
+      'content' => fake()->text(),
+      'user_id' => rand(1, 10)
+    );
+    $ticket = new TicketRepository;
+    $newTicket = $ticket->create($data);
+
+    $replace = array(
+      'title' => 'new_title',
+      'content' => 'new_content'
+    );
+
+    $ticket->update($newTicket['id'], $replace);
+    $this->assertDatabaseHas('tickets', ['title' => $replace['title']]);
+    $this->assertDatabaseHas('tickets', ['content' => $replace['content']]);
+  }
 }
