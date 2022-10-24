@@ -13,6 +13,11 @@ body {
   margin-top: 0;
 }
 
+button,
+.btn {
+  background: #435F6F !important;
+  border: 1px solid #435F6F !important;
+}
 
 /* HEADER */
 
