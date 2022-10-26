@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TicketController;
+use App\Http\Controllers\TechnicalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,8 @@ Route::get('/create', [TicketController::class, 'create'])->name('ticket.create'
 Route::post('/store', [TicketController::class, 'store'])->name('ticket.store');
 Route::get('/edit/{id}', [TicketController::class, 'edit'])->name('ticket.edit');
 Route::put('/update/{id}', [TicketController::class, 'update'])->name('ticket.update');
+
+
+Route::prefix('technical')->group(function () {
+  Route::get('/create', [TechnicalController::class, 'create']);
+});
