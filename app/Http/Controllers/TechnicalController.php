@@ -41,7 +41,13 @@ class TechnicalController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    $validated = $request->validate([
+      'name' => 'required',
+      'email' => 'required|unique:technicals,email',
+      'password' => 'required'
+    ]);
+
+    dd($validated);
   }
 
   /**

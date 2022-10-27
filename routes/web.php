@@ -24,5 +24,6 @@ Route::put('/update/{id}', [TicketController::class, 'update'])->name('ticket.up
 
 
 Route::prefix('technical')->group(function () {
-  Route::get('/create', [TechnicalController::class, 'create']);
+  Route::get('/create', [TechnicalController::class, 'create'])->name('technical.create');
+  Route::post('/store', [TechnicalController::class, 'store'])->name('technical.store');
 });
