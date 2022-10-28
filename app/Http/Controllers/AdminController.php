@@ -5,21 +5,13 @@ namespace App\Http\Controllers;
 use App\Contracts\TechnicalRepoInterface;
 use Illuminate\Http\Request;
 
-class TechnicalController extends Controller
+class AdminController extends Controller
 {
 
-
-  /**
-   * __construct
-   *
-   * @param  mixed $technical
-   * @return void
-   */
   public function __construct(private TechnicalRepoInterface $technical)
   {
-    $this->technical = $technical;
+    $this->techincal = $technical;
   }
-
   /**
    * Display a listing of the resource.
    *
@@ -27,7 +19,11 @@ class TechnicalController extends Controller
    */
   public function index()
   {
-    //
+    $technicals =  $this->technical->findAll();
+    // dd($technicals);
+    return view('admin.index', array(
+      'technicals' => $technicals
+    ));
   }
 
   /**
@@ -37,7 +33,7 @@ class TechnicalController extends Controller
    */
   public function create()
   {
-    return view('technical.create');
+    //
   }
 
   /**
@@ -48,14 +44,7 @@ class TechnicalController extends Controller
    */
   public function store(Request $request)
   {
-    $validated = $request->validate([
-      'name' => 'required',
-      'email' => 'required|unique:technicals,email',
-      'password' => 'required'
-    ]);
-
-    // $technical = $this->technical->create()
-
+    //
   }
 
   /**
