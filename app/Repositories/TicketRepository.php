@@ -24,7 +24,7 @@ class TicketRepository implements TicketRepoInterface
    * @param integer $id
    * @return array
    */
-  public function find(int $id)
+  public function find($id)
   {
     return Ticket::find($id);
   }

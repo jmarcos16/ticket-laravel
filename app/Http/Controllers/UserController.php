@@ -2,22 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\TechnicalRepoInterface;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
-class TechnicalController extends Controller
+class UserController extends Controller
 {
 
 
-  /**
-   * __construct
-   *
-   * @param  mixed $technical
-   * @return void
-   */
-  public function __construct(private TechnicalRepoInterface $technical)
+  private $user;
+
+  public function __construct(UserRepository $user)
   {
-    $this->technical = $technical;
+    $this->user = $user;
   }
 
   /**
@@ -37,8 +33,11 @@ class TechnicalController extends Controller
    */
   public function create()
   {
-    return view('technical.create');
+    return view('users.create');
   }
+
+
+
 
   /**
    * Store a newly created resource in storage.
@@ -48,14 +47,21 @@ class TechnicalController extends Controller
    */
   public function store(Request $request)
   {
+
     $validated = $request->validate([
       'name' => 'required',
-      'email' => 'required|unique:technicals,email',
+      'email' => 'required',
       'password' => 'required'
     ]);
 
-    // $technical = $this->technical->create()
+    try {
 
+      $user = $this->user->store($request);
+
+      return view('users.create');
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('error', $th->getMessage());
+    }
   }
 
   /**

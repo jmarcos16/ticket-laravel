@@ -16,7 +16,7 @@
 <body>
     <header class="row justify-content-center">
         <div id="header" class="col-xl-7 d-flex justify-content-between">
-            <a class="logo">
+            <a href="#" class="logo">
                 <i class='bx bxs-extension'></i>
                 <span>TicketPlus</span>
             </a>

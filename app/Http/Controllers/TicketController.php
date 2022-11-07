@@ -37,6 +37,7 @@ class TicketController extends Controller
    */
   public function create()
   {
+    // dd("duiona");
     return view('tickets.create');
   }
 

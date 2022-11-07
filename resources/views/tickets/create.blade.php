@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Criar novo Ticket')
 @section('content')
-
     <div class="row justify-content-center">
         <div class="col-xl-7 mt-5 mb-3">
             <h3>New Ticket</h3>
@@ -11,5 +10,4 @@
             </form>
         </div>
     </div>
-
 @endsection
