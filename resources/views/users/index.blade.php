@@ -4,10 +4,14 @@
 
     <div class="row justify-content-center">
         <div class="col-xl-7 mt-5 mb-3">
-            <h3>All Users</h3>
+            <div class="d-flex justify-content-between">
+                <h3>All Users</h3>
+                <a href="{{ route('user.create') }}" class="btn btn-primary">New User</a>
+            </div>
             <table class="table table-triped">
                 <thead>
                     <tr>
+                        <th><input type="checkbox" name="" id=""></th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Type</th>
@@ -19,6 +23,7 @@
 
                     @foreach ($users['administrator'] as $user)
                         <tr>
+                            <td><input type="checkbox" name="" id=""></td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>administrator</td>
@@ -29,6 +34,7 @@
 
                     @foreach ($users['technical'] as $user)
                         <tr>
+                            <td><input type="checkbox" name="" id=""></td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>technical</td>
@@ -39,6 +45,7 @@
 
                     @foreach ($users['employee'] as $user)
                         <tr>
+                            <td> <input type="checkbox" name="" id=""></td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>employee</td>

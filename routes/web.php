@@ -14,7 +14,7 @@ Route::prefix('ticket')->group(function () {
 });
 
 Route::prefix('user')->group(function () {
-  Route::get('/dashbord', [UserController::class, 'index'])->name('user.dash');
+  Route::get('/dashboard', [UserController::class, 'index'])->name('user.dash');
   Route::get('/create', [UserController::class, 'create'])->name('user.create');
   Route::post('/store', [UserController::class, 'store'])->name('user.store');
 });

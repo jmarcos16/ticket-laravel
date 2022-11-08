@@ -24,7 +24,7 @@ class UserRepository implements UserRepositoryInterface
   ) {
     $this->administrator = $administrator;
     $this->technical = $technical;
-    $this->employee = $administrator;
+    $this->employee = $employee;
   }
 
   public function all()
@@ -51,6 +51,7 @@ class UserRepository implements UserRepositoryInterface
     if ($validateEmailUnique) {
       throw new Exception('Email already exists, try another one.');
     }
+
 
     $validateModel = $this->save($validateModel, $request);
 
