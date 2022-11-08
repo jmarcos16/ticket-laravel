@@ -11,6 +11,6 @@ interface UserRepositoryInterface
   public function store(Request $atributts);
   public function update(Request $atributts);
   public function all();
-  public function find(int $id);
+  public function find(int $id, string $provider);
   public function save(User $model, Request $request);
 }

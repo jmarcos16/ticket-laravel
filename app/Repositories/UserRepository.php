@@ -85,8 +85,17 @@ class UserRepository implements UserRepositoryInterface
     return $model;
   }
 
-  public function find(int $id)
+  public function find(int $id, string $provider)
   {
+
+    $validateModel = $this->validateProvider($provider);
+    $user = $validateModel->find($id);
+
+    if (!$user) {
+      throw new Exception($provider . ' not found');
+    }
+
+    return $user;
   }
 
   private function validateProvider(string $provider): User

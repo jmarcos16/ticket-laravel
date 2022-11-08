@@ -79,9 +79,20 @@ class UserController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function show($id)
+  public function show($id, $provider)
   {
-    //
+    try {
+
+      $user = $this->user->find($id, $provider);
+      return view('users.show', array(
+        'user' => $user
+      ));
+    } catch (\Throwable $th) {
+
+      return redirect()
+        ->route('user.dash')
+        ->with('error', $th->getMessage());
+    }
   }
 
   /**

@@ -17,4 +17,5 @@ Route::prefix('user')->group(function () {
   Route::get('/dashboard', [UserController::class, 'index'])->name('user.dash');
   Route::get('/create', [UserController::class, 'create'])->name('user.create');
   Route::post('/store', [UserController::class, 'store'])->name('user.store');
+  Route::get('/show/{id}/{provider?}', [UserController::class, 'show'])->name('user.show');
 });

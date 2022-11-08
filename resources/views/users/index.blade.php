@@ -17,9 +17,11 @@
                         <th>Type</th>
                         <th>Updated_at</th>
                         <th>Created_at</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
+
 
                     @foreach ($users['administrator'] as $user)
                         <tr>
@@ -29,6 +31,11 @@
                             <td>administrator</td>
                             <td>{{ $user->updated_at }}</td>
                             <td>{{ $user->created_at }}</td>
+                            <td>
+                                <a
+                                    href="{{ route('user.show', $user->id . '/' . 'administrator') }}"class="btn btn-success">Editar
+                                </a>
+                            </td>
                         </tr>
                     @endforeach
 
@@ -40,6 +47,9 @@
                             <td>technical</td>
                             <td>{{ $user->updated_at }}</td>
                             <td>{{ $user->created_at }}</td>
+                            <a href="{{ route('user.show', $user->id . '/' . 'technical') }}"
+                                class="btn btn-success">Editar
+                            </a>
                         </tr>
                     @endforeach
 
@@ -51,6 +61,8 @@
                             <td>employee</td>
                             <td>{{ $user->updated_at }}</td>
                             <td>{{ $user->created_at }}</td>
+                            <a href="{{ route('user.show', $user->id . '/' . 'employee') }}" class="btn btn-success">Editar
+                            </a>
                         </tr>
                     @endforeach
                 </tbody>

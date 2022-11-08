@@ -7,4 +7,4 @@ The idea of ​​the project is to create a call system, in this project I try 
 - **[Laravel Framework](https://laravel.com/)**
 - **[Datatables](https://datatables.net/)**
 
-## Contributing
+## Authors
