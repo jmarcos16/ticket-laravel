@@ -5,15 +5,42 @@ namespace App\Repositories;
 use App\Models\Employee;
 use App\Models\Technical;
 use Illuminate\Http\Request;
-use App\Models\Adiministrator;
 use Illuminate\Foundation\Auth\User;
 use App\Contracts\UserRepositoryInterface;
+use App\Models\Administrator;
 use Exception;
 
 class UserRepository implements UserRepositoryInterface
 {
+
+  private $technical;
+  private $employee;
+  private $administrator;
+
+  public function __construct(
+    Technical $technical,
+    Employee $employee,
+    Administrator $administrator
+  ) {
+    $this->administrator = $administrator;
+    $this->technical = $technical;
+    $this->employee = $administrator;
+  }
+
   public function all()
   {
+
+    $user = array();
+
+    $technical = $this->technical->all();
+    $administrator = $this->administrator->all();
+    $employee = $this->employee->all();
+
+    $user['technical'] = $technical;
+    $user['administrator'] = $administrator;
+    $user['employee'] = $employee;
+
+    return $user;
   }
   public function store(Request $request)
   {
@@ -65,15 +92,15 @@ class UserRepository implements UserRepositoryInterface
   {
 
     if ($provider == 'employee') {
-      return new Employee();
+      return $this->employee;
     }
 
     if ($provider == 'technical') {
-      return new Technical();
+      return $this->technical;
     }
 
     if ($provider == 'administrator') {
-      return new Adiministrator();
+      return $this->administrator;
     }
 
     throw new \Exception('Provider is not valid');

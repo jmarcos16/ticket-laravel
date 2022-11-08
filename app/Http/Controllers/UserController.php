@@ -23,7 +23,10 @@ class UserController extends Controller
    */
   public function index()
   {
-    //
+    $allUser = $this->user->all();
+    return view('users.index', array(
+      'users' => $allUser
+    ));
   }
 
   /**
@@ -33,6 +36,8 @@ class UserController extends Controller
    */
   public function create()
   {
+
+
     return view('users.create');
   }
 
@@ -58,9 +63,13 @@ class UserController extends Controller
 
       $user = $this->user->store($request);
 
-      return view('users.create');
+      return redirect()
+        ->route('user.dash')
+        ->with('success', 'User registered successfully');
     } catch (\Throwable $th) {
-      return redirect()->back()->with('error', $th->getMessage());
+      return redirect()
+        ->route('user.dash')
+        ->with('error', $th->getMessage());
     }
   }
 

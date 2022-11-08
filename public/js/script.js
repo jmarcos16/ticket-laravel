@@ -20,3 +20,14 @@ $(document).ready(function () {
     });
   }
 });
+
+
+// Components Alerts
+
+const alerts = document.getElementById("alert-mensage");
+
+setTimeout(function () {
+  alerts.style.display = "none";
+}, 3600);
+
+
