@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{{ url('/css/app.style.css') }}">
     <link rel="stylesheet" href="{{ url('/css/datatable.css') }}">
     <link rel="stylesheet" href="{{ url('/css/components.css') }}">
+
+    @stack('extra-css')
+
     <!-- Boxicons CSS -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -46,6 +49,7 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
     <script src="{{ url('/js/script.js') }}" defer></script>
+    @stack('extra-js')
 </body>
 
 </html>
