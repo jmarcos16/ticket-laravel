@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\UserRepository;
+use App\Contracts\UserRepositoryInterface;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -11,7 +11,7 @@ class UserController extends Controller
 
   private $user;
 
-  public function __construct(UserRepository $user)
+  public function __construct(UserRepositoryInterface $user)
   {
     $this->user = $user;
   }
@@ -52,13 +52,6 @@ class UserController extends Controller
    */
   public function store(Request $request)
   {
-
-    $validated = $request->validate([
-      'name' => 'required',
-      'email' => 'required',
-      'password' => 'required'
-    ]);
-
     try {
 
       $user = $this->user->store($request);
@@ -99,11 +92,23 @@ class UserController extends Controller
    * Show the form for editing the specified resource.
    *
    * @param  int  $id
+   * @param string $provider
    * @return \Illuminate\Http\Response
    */
-  public function edit($id)
+  public function edit($id, string $provider)
   {
-    //
+    try {
+
+      $user = $this->user->find($id, $provider);
+      return view('users.edit', array(
+        'user' => $user
+      ));
+    } catch (\Throwable $th) {
+
+      return redirect()
+        ->route('user.dash')
+        ->with('error', $th->getMessage());
+    }
   }
 
   /**
@@ -115,7 +120,18 @@ class UserController extends Controller
    */
   public function update(Request $request, $id)
   {
-    //
+    try {
+
+      $user = $this->user->update($request, $id);
+
+      return redirect()
+        ->route('user.dash')
+        ->with('success', 'User edit successfully');
+    } catch (\Throwable $th) {
+      return redirect()
+        ->route('user.dash')
+        ->with('error', $th->getMessage());
+    }
   }
 
   /**

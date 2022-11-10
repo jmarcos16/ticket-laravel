@@ -10,13 +10,24 @@
 
             <div class="d-flex justify-content-between ">
                 <h3>All Users</h3>
+                <div class="search-users d-flex w-25">
+                    <i class='bx bx-search-alt'></i>
+                    <input class="form-control shadow-none" type="text" placeholder="Search">
+                </div>
                 {{-- <a href="{{ route('user.create') }}" class="btn btn-primary">New User</a> --}}
             </div>
 
             <div class="d-flex justify-content-between align-items-center py-1 border-bottom pb-2">
-                <div class="search-users d-flex w-25">
-                    <i class='bx bx-search-alt'></i>
-                    <input class="form-control shadow-none" type="text" placeholder="Search">
+                <div class="d-flex w-25 align-items-center">
+                    Mostrar
+                    <select class="form-control shadow-none w-auto align-items-center mx-1" name="" id="">
+                        <option value="">10</option>
+                        <option value="">20</option>
+                        <option value="">30</option>
+                        <option value="">Todos</option>
+                    </select>
+
+                    Items
                 </div>
 
                 <div class="btn-actions d-flex">
@@ -52,12 +63,12 @@
 
 
                         @foreach ($users['administrator'] as $user)
-                            <tr>
+                            <tr id="{{ $user->id }}">
                                 <td><input type="checkbox" name="" id=""></td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
-                                    <span class="badge text-bg-secondary">administrator</span>
+                                    <span class="badge text-bg-secondary value-provider">administrator</span>
                                 </td>
                                 <td>{{ $user->updated_at }}</td>
                                 <td>{{ $user->created_at }}</td>
@@ -70,12 +81,13 @@
                         @endforeach
 
                         @foreach ($users['technical'] as $user)
-                            <tr>
-                                <td><input type="checkbox" name="" id=""></td>
+                            <tr id="{{ $user->id }}">
+                                <td><input type="checkbox" name="" id="">
+                                </td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
-                                    <span class="badge text-bg-success">technical</span>
+                                    <span class="badge text-bg-success value-provider">technical</span>
                                 </td>
                                 <td>{{ $user->updated_at }}</td>
                                 <td>{{ $user->created_at }}</td>
@@ -88,12 +100,12 @@
                         @endforeach
 
                         @foreach ($users['employee'] as $user)
-                            <tr>
+                            <tr id="{{ $user->id }}">
                                 <td> <input type="checkbox" name="" id=""></td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
-                                    <span class="badge text-bg-primary">employee</span>
+                                    <span class="badge text-bg-primary value-provider">employee</span>
                                 </td>
                                 <td>{{ $user->updated_at }}</td>
                                 <td>{{ $user->created_at }}</td>

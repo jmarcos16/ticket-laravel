@@ -1,7 +1,7 @@
 const buttonEdit = document.getElementById("button-edit");
 const buttonDelete = document.getElementById("button-delete");
 
-document.querySelectorAll(".list-users").forEach((item) => {
+document.querySelectorAll(".list-users > tr").forEach((item) => {
   item.addEventListener("click", (element) => {
     const curentElement = element.target.parentNode;
     const selected = document.querySelector(".item-selected");
@@ -11,8 +11,8 @@ document.querySelectorAll(".list-users").forEach((item) => {
     }
 
     controlCheckbox(curentElement);
-    activateButtonsActions();
     curentElement.classList.toggle("item-selected");
+    activateButtonsActions();
   });
 });
 
@@ -39,13 +39,35 @@ function controlCheckbox(currentElement) {
 }
 
 function activateButtonsActions() {
-  const listItems = document.querySelectorAll("tbody > tr");
+  const listItems = document.querySelector("tr.item-selected");
 
-  listItems.forEach((element) => {
-    if (element.classList == "item-selected") {
-      buttonDelete.style.display = "block";
-    } else {
-      buttonDelete.style.display = "none";
-    }
-  });
+  if (listItems) {
+    buttonDelete.style.display = "block";
+    buttonEdit.style.display = "block";
+  } else {
+    buttonEdit.style.display = "none";
+    buttonDelete.style.display = "none";
+  }
 }
+
+buttonEdit.addEventListener("click", function (element) {
+  const idUser = document.querySelector("tr.item-selected");
+  const provider = idUser.getElementsByClassName("value-provider");
+  element.preventDefault();
+
+  if (idUser) {
+    window.location.href = `/user/edit/${idUser.id}/${provider[0].textContent}`;
+  }
+});
+
+buttonDelete.addEventListener("click", function (element) {
+  if (window.confirm("Excluir item")) {
+    const idUser = document.querySelector("tr.item-selected");
+    const provider = idUser.getElementsByClassName("value-provider");
+
+    if (idUser) {
+      window.location.href = `/user/delete/${idUser.id}/${provider[0].textContent}`;
+    }
+  }
+  element.preventDefault();
+});

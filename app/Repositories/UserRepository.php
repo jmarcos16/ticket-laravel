@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User;
 use App\Contracts\UserRepositoryInterface;
 use App\Models\Administrator;
 use Exception;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -45,20 +46,44 @@ class UserRepository implements UserRepositoryInterface
   public function store(Request $request)
   {
 
-    $validateModel = $this->validateProvider($request->input('provider'));
-    $validateEmailUnique = $validateModel->where('email', $request->input('email'))->first();
+    $validated = $request->validate([
+      'name' => 'required',
+      'email' => 'required',
+      'password' => 'required'
+    ]);
+
+    $user = $this->validateProvider($request->input('provider'));
+    $validateEmailUnique = $user->where('email', $request->input('email'))->first();
 
     if ($validateEmailUnique) {
       throw new Exception('Email already exists, try another one.');
     }
 
 
-    $validateModel = $this->save($validateModel, $request);
+    $user = $this->save($user, $request);
 
-    return $validateModel;
+    return $user;
   }
-  public function update(Request $request)
+
+
+  public function update(Request $request, int $id)
   {
+
+    $validated = $request->validate([
+      'name' => 'required',
+      'email' => 'required'
+    ]);
+
+    $user = $this->validateProvider($request->input('provider'));
+    $validateEmailUnique = $user->where('email', $request->input('email'))->first();
+
+    if ($validateEmailUnique && $validateEmailUnique->id !== $id) {
+      throw new Exception('Email already exists, try another one.');
+    }
+
+    $user = $this->save($user, $request);
+
+    return $user;
   }
 
 
@@ -75,10 +100,13 @@ class UserRepository implements UserRepositoryInterface
     if ($request->input('id')) {
       $model->id = $request->input('id');
     }
+    if ($request->password) {
+      $model->password = bcrypt($request->input('password'));
+    }
 
     $model->name = $request->input('name');
     $model->email = $request->input('email');
-    $model->password = bcrypt($request->input('password'));
+
 
     $model->save();
 
@@ -88,8 +116,8 @@ class UserRepository implements UserRepositoryInterface
   public function find(int $id, string $provider)
   {
 
-    $validateModel = $this->validateProvider($provider);
-    $user = $validateModel->find($id);
+    $user = $this->validateProvider($provider);
+    $user = $user->find($id);
 
     if (!$user) {
       throw new Exception($provider . ' not found');

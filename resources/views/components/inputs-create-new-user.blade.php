@@ -34,16 +34,18 @@
         @enderror
     </div>
 
-    <div class="form-floating">
-        <select name="provider" class="form-select shadow-none" id="floatingSelect"
-            aria-label="Floating label select example" required>
-            <option selected disabled>Select type user</option>
-            <option value="employee">Employee</option>
-            <option value="technical">Technical</option>
-            <option value="administrator">Administrator</option>
-        </select>
-        <label for="floatingSelect">Select typer user</label>
-    </div>
+    @if (!$user)
+        <div class="form-floating">
+            <select name="provider" class="form-select shadow-none" id="floatingSelect"
+                aria-label="Floating label select example" required>
+                <option selected disabled>Select type user</option>
+                <option value="employee">Employee</option>
+                <option value="technical">Technical</option>
+                <option value="administrator">Administrator</option>
+            </select>
+            <label for="floatingSelect">Select typer user</label>
+        </div>
+    @endif
 
     {{-- {{ $errors->m() }} --}}
 </div>

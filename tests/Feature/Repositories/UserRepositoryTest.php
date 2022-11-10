@@ -33,7 +33,7 @@ class UserRepositoryTest extends TestCase
   public function test_check_if_provider_is_not_valid()
   {
 
-    $data = ['name' => null, 'email' => null, 'password' => null, 'provider' => 'incorrect_provider'];
+    $data = ['name' => 'jose', 'email' => 'jose', 'password' => 'dbwbia', 'provider' => 'incorrect_provider'];
     $request = Request::create(route('ticket.store'), 'POST', $data);
 
     $errorHappened = false;
