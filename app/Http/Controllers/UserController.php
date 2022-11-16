@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\UserRepositoryInterface;
+use Exception;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -23,9 +25,11 @@ class UserController extends Controller
    */
   public function index()
   {
-    $allUser = $this->user->all();
+
+    $users = $this->user->findAll();
+
     return view('users.index', array(
-      'users' => $allUser
+      'users' => $users
     ));
   }
 
@@ -36,13 +40,8 @@ class UserController extends Controller
    */
   public function create()
   {
-
-
     return view('users.create');
   }
-
-
-
 
   /**
    * Store a newly created resource in storage.
@@ -52,14 +51,15 @@ class UserController extends Controller
    */
   public function store(Request $request)
   {
+
     try {
 
-      $user = $this->user->store($request);
-
+      $user = $this->user->create($request);
       return redirect()
         ->route('user.dash')
-        ->with('success', 'User registered successfully');
+        ->with('success', 'User created sucessfull.');
     } catch (\Throwable $th) {
+
       return redirect()
         ->route('user.dash')
         ->with('error', $th->getMessage());
@@ -72,43 +72,20 @@ class UserController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function show($id, $provider)
+  public function show($id)
   {
-    try {
-
-      $user = $this->user->find($id, $provider);
-      return view('users.show', array(
-        'user' => $user
-      ));
-    } catch (\Throwable $th) {
-
-      return redirect()
-        ->route('user.dash')
-        ->with('error', $th->getMessage());
-    }
+    //
   }
 
   /**
    * Show the form for editing the specified resource.
    *
    * @param  int  $id
-   * @param string $provider
    * @return \Illuminate\Http\Response
    */
-  public function edit($id, string $provider)
+  public function edit($id)
   {
-    try {
-
-      $user = $this->user->find($id, $provider);
-      return view('users.edit', array(
-        'user' => $user
-      ));
-    } catch (\Throwable $th) {
-
-      return redirect()
-        ->route('user.dash')
-        ->with('error', $th->getMessage());
-    }
+    //
   }
 
   /**
@@ -120,18 +97,7 @@ class UserController extends Controller
    */
   public function update(Request $request, $id)
   {
-    try {
-
-      $user = $this->user->update($request, $id);
-
-      return redirect()
-        ->route('user.dash')
-        ->with('success', 'User edit successfully');
-    } catch (\Throwable $th) {
-      return redirect()
-        ->route('user.dash')
-        ->with('error', $th->getMessage());
-    }
+    //
   }
 
   /**
@@ -143,5 +109,19 @@ class UserController extends Controller
   public function destroy($id)
   {
     //
+  }
+
+
+  public function validateProviderTypeUser($type)
+  {
+    $types = ['employee', 'technical', 'administrator'];
+
+    $validation = in_array($type, $types);
+
+    if (!$validation) {
+      throw new Exception('Type user is not valid.');
+    }
+
+    return new User;
   }
 }

@@ -2,145 +2,79 @@
 
 namespace App\Repositories;
 
-use App\Models\Employee;
-use App\Models\Technical;
+
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\User;
 use App\Contracts\UserRepositoryInterface;
-use App\Models\Administrator;
+use App\Models\User;
 use Exception;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as AuthUser;
 
 class UserRepository implements UserRepositoryInterface
 {
 
-  private $technical;
-  private $employee;
-  private $administrator;
+  private $user;
 
-  public function __construct(
-    Technical $technical,
-    Employee $employee,
-    Administrator $administrator
-  ) {
-    $this->administrator = $administrator;
-    $this->technical = $technical;
-    $this->employee = $employee;
-  }
-
-  public function all()
+  public function __construct()
   {
-
-    $user = array();
-
-    $technical = $this->technical->all();
-    $administrator = $this->administrator->all();
-    $employee = $this->employee->all();
-
-    $user['technical'] = $technical;
-    $user['administrator'] = $administrator;
-    $user['employee'] = $employee;
-
-    return $user;
+    $this->user = new User;
   }
-  public function store(Request $request)
+
+  public function findAll()
+  {
+    return $this->user->all();
+  }
+  public function findOne(int $id)
+  {
+  }
+  public function create(Request $request)
   {
 
     $validated = $request->validate([
       'name' => 'required',
-      'email' => 'required',
-      'password' => 'required'
+      'email' => 'required|unique:users',
+      'password' => 'required',
+      'type_user' => 'required'
     ]);
 
-    $user = $this->validateProvider($request->input('provider'));
-    $validateEmailUnique = $user->where('email', $request->input('email'))->first();
+    $user = $this->getValidateTypeUser($request->input('type_user'));
 
-    if ($validateEmailUnique) {
-      throw new Exception('Email already exists, try another one.');
+    $user  = $this->save($user, $request);
+
+    dd($user);
+  }
+  public function update(int $id, Request $atributts)
+  {
+  }
+  public function delete(int $id)
+  {
+  }
+
+
+  private function save(Model $user, Request $request)
+  {
+
+    if ($request->input('password')) {
+      $user->password = bcrypt($request->input('password'));
     }
 
-
-    $user = $this->save($user, $request);
+    $user->name = $request->input('name');
+    $user->email = $request->input('email');
+    $user->type_user = $request->input('type_user');
+    $user->save();
 
     return $user;
   }
 
-
-  public function update(Request $request, int $id)
+  private function getValidateTypeUser(string $type)
   {
 
-    $validated = $request->validate([
-      'name' => 'required',
-      'email' => 'required'
-    ]);
+    $types = ['technical', 'administrator', 'employee'];
 
-    $user = $this->validateProvider($request->input('provider'));
-    $validateEmailUnique = $user->where('email', $request->input('email'))->first();
-
-    if ($validateEmailUnique && $validateEmailUnique->id !== $id) {
-      throw new Exception('Email already exists, try another one.');
+    if (!in_array($type, $types)) {
+      throw new Exception('Type user is invalid');
     }
-
-    $user = $this->save($user, $request);
-
-    return $user;
-  }
-
-
-  /**
-   * persist user in database
-   *
-   * @param ModelsUser $model
-   * @param Request $request
-   * @return Illuminate\Foundation\Auth\User
-   */
-  public function save(User $model, Request $request)
-  {
-
-    if ($request->input('id')) {
-      $model->id = $request->input('id');
-    }
-    if ($request->password) {
-      $model->password = bcrypt($request->input('password'));
-    }
-
-    $model->name = $request->input('name');
-    $model->email = $request->input('email');
-
-
-    $model->save();
-
-    return $model;
-  }
-
-  public function find(int $id, string $provider)
-  {
-
-    $user = $this->validateProvider($provider);
-    $user = $user->find($id);
-
-    if (!$user) {
-      throw new Exception($provider . ' not found');
-    }
-
-    return $user;
-  }
-
-  private function validateProvider(string $provider): User
-  {
-
-    if ($provider == 'employee') {
-      return $this->employee;
-    }
-
-    if ($provider == 'technical') {
-      return $this->technical;
-    }
-
-    if ($provider == 'administrator') {
-      return $this->administrator;
-    }
-
-    throw new \Exception('Provider is not valid');
+    return $this->user;
   }
 }

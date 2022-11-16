@@ -34,9 +34,9 @@
         @enderror
     </div>
 
-    @if (!$user)
+    @if (!isset($user))
         <div class="form-floating">
-            <select name="provider" class="form-select shadow-none" id="floatingSelect"
+            <select name="type_user" class="form-select shadow-none" id="floatingSelect"
                 aria-label="Floating label select example" required>
                 <option selected disabled>Select type user</option>
                 <option value="employee">Employee</option>

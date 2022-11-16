@@ -62,56 +62,19 @@
                     <tbody class="list-users">
 
 
-                        @foreach ($users['administrator'] as $user)
+                        @foreach ($users as $user)
                             <tr id="{{ $user->id }}">
                                 <td><input type="checkbox" name="" id=""></td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
-                                    <span class="badge text-bg-secondary value-provider">administrator</span>
+                                    <span class="badge text-bg-secondary value-provider">{{ $user->type_user }}</span>
                                 </td>
                                 <td>{{ $user->updated_at }}</td>
                                 <td>{{ $user->created_at }}</td>
                                 <td>
                                     <a
                                         href="{{ route('user.show', $user->id . '/' . 'administrator') }}"class="btn btn-success">Editar
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-
-                        @foreach ($users['technical'] as $user)
-                            <tr id="{{ $user->id }}">
-                                <td><input type="checkbox" name="" id="">
-                                </td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>
-                                    <span class="badge text-bg-success value-provider">technical</span>
-                                </td>
-                                <td>{{ $user->updated_at }}</td>
-                                <td>{{ $user->created_at }}</td>
-                                <td>
-                                    <a href="{{ route('user.show', $user->id . '/' . 'technical') }}"
-                                        class="btn btn-success">Editar
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-
-                        @foreach ($users['employee'] as $user)
-                            <tr id="{{ $user->id }}">
-                                <td> <input type="checkbox" name="" id=""></td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>
-                                    <span class="badge text-bg-primary value-provider">employee</span>
-                                </td>
-                                <td>{{ $user->updated_at }}</td>
-                                <td>{{ $user->created_at }}</td>
-                                <td>
-                                    <a href="{{ route('user.show', $user->id . '/' . 'employee') }}"
-                                        class="btn btn-success">Editar
                                     </a>
                                 </td>
                             </tr>

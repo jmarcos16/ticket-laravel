@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 interface UserRepositoryInterface
 {
-  public function store(Request $atributts);
-  public function update(Request $atributts, int $id);
-  public function all();
-  public function find(int $id, string $provider);
-  public function save(User $model, Request $request);
+  public function findAll();
+  public function findOne(int $id);
+  public function create(Request $atributts);
+  public function update(int $id, Request $atributts);
+  public function delete(int $id);
 }
