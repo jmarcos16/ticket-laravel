@@ -1,5 +1,7 @@
 const buttonEdit = document.getElementById("button-edit");
 const buttonDelete = document.getElementById("button-delete");
+const filterCountRows = document.getElementById("filter-value");
+const formFilters = document.querySelector("form");
 
 document.querySelectorAll(".list-users > tr").forEach((item) => {
   item.addEventListener("click", (element) => {
@@ -52,22 +54,27 @@ function activateButtonsActions() {
 
 buttonEdit.addEventListener("click", function (element) {
   const idUser = document.querySelector("tr.item-selected");
-  const provider = idUser.getElementsByClassName("value-provider");
   element.preventDefault();
 
   if (idUser) {
-    window.location.href = `/user/edit/${idUser.id}/${provider[0].textContent}`;
+    window.location.href = `/user/edit/${idUser.id}`;
   }
 });
 
 buttonDelete.addEventListener("click", function (element) {
   if (window.confirm("Excluir item")) {
     const idUser = document.querySelector("tr.item-selected");
-    const provider = idUser.getElementsByClassName("value-provider");
 
     if (idUser) {
-      window.location.href = `/user/delete/${idUser.id}/${provider[0].textContent}`;
+      window.location.href = `/user/delete/${idUser.id}`;
     }
   }
   element.preventDefault();
+});
+
+// Filter Count Row Query
+
+filterCountRows.addEventListener("change", (event) => {
+  console.log(event.target.value);
+  formFilters.submit();
 });

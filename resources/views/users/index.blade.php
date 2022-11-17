@@ -6,13 +6,13 @@
 @section('content')
 
     <div class="row justify-content-center ">
-        <div class="col-xl-7 mt-5 mb-3">
+        <form method="GET" class="col-xl-7 mt-5 mb-3">
 
             <div class="d-flex justify-content-between ">
                 <h3>All Users</h3>
                 <div class="search-users d-flex w-25">
                     <i class='bx bx-search-alt'></i>
-                    <input class="form-control shadow-none" type="text" placeholder="Search">
+                    <input name="search" class="form-control shadow-none" type="text" placeholder="Search">
                 </div>
                 {{-- <a href="{{ route('user.create') }}" class="btn btn-primary">New User</a> --}}
             </div>
@@ -20,11 +20,12 @@
             <div class="d-flex justify-content-between align-items-center py-1 border-bottom pb-2">
                 <div class="d-flex w-25 align-items-center">
                     Mostrar
-                    <select class="form-control shadow-none w-auto align-items-center mx-1" name="" id="">
-                        <option value="">10</option>
-                        <option value="">20</option>
-                        <option value="">30</option>
-                        <option value="">Todos</option>
+                    <select class="form-control shadow-none w-auto align-items-center mx-1" name="filter-value"
+                        id="filter-value">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="all">Todos</option>
                     </select>
 
                     Items
@@ -40,7 +41,7 @@
                         <span>Deletar</span>
                     </a>
 
-                    <a href="" class="btn-action">
+                    <a href="{{ route('user.create') }}" class="btn-action">
                         <i class='bx bx-plus'></i>
                         <span>Create</span>
                     </a>
@@ -82,7 +83,9 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+
+
+        </form>
     </div>
 
 @endsection

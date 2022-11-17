@@ -25,9 +25,14 @@ class UserRepository implements UserRepositoryInterface
   {
     return $this->user->all();
   }
+
+
   public function findOne(int $id)
   {
+    return $this->user->findOrFail($id);
   }
+
+
   public function create(Request $request)
   {
 
@@ -42,13 +47,34 @@ class UserRepository implements UserRepositoryInterface
 
     $user  = $this->save($user, $request);
 
-    dd($user);
+    return $user;
   }
-  public function update(int $id, Request $atributts)
+
+
+  public function update(int $id, Request $request)
   {
+
+    $validated = $request->validate([
+      'name' => 'required',
+      'email' => 'required',
+    ]);
+
+    $findUser = $this->findOne($id);
+    $emailExist = $this->user->where('email', $request->input('email'))->first();
+
+    if ($emailExist && $emailExist->id !== $id) {
+      throw new Exception('Email areald exist in database');
+    }
+
+    return $this->save($findUser, $request);
   }
+
   public function delete(int $id)
   {
+
+    $user = $this->findOne($id);
+
+    return $user->delete();
   }
 
 
@@ -59,9 +85,14 @@ class UserRepository implements UserRepositoryInterface
       $user->password = bcrypt($request->input('password'));
     }
 
+    if ($request->input('type_user')) {
+      $user->type_user = $request->input('type_user');
+    }
+
     $user->name = $request->input('name');
     $user->email = $request->input('email');
-    $user->type_user = $request->input('type_user');
+
+
     $user->save();
 
     return $user;

@@ -85,7 +85,11 @@ class UserController extends Controller
    */
   public function edit($id)
   {
-    //
+    $user = $this->user->findOne($id);
+
+    return view('users.edit', array(
+      'user' => $user
+    ));
   }
 
   /**
@@ -97,7 +101,14 @@ class UserController extends Controller
    */
   public function update(Request $request, $id)
   {
-    //
+    try {
+
+      $user = $this->user->update($id, $request);
+
+      return redirect()->route('user.dash')->with('success', 'Edit User Successfull.');
+    } catch (\Throwable $th) {
+      return redirect()->route('user.dash')->with('error', $th->getMessage());
+    }
   }
 
   /**
@@ -108,7 +119,13 @@ class UserController extends Controller
    */
   public function destroy($id)
   {
-    //
+    try {
+      $user = $this->user->delete($id);
+
+      return redirect()->route('user.dash')->with('success', 'Deleted User Successfull.');
+    } catch (\Throwable $th) {
+      return redirect()->route('user.dash')->with('error', $th->getMessage());
+    }
   }
 
 
